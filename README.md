@@ -1,22 +1,22 @@
 # cortex-embedded
 
-**The cognitive engine. One crate. One SQLite file. A complete graph-memory runtime for self-aware AI agents.**
+**Embedded memory graphs for AI agents. One crate. One SQLite file. A complete graph-memory runtime that makes agents self-aware.**
 
-Everything — identity, knowledge, tool calls, LLM calls, sub-agent work, loop iterations, self-model — is a node in the graph. The agent queries its own history the same way it queries any other knowledge.
+An embedded memory graph engine where everything — identity, knowledge, tool calls, LLM calls, sub-agent work, loop iterations, self-model — lives as a node in the graph. The agent queries its own history the same way it queries any other knowledge. No external database. No network dependency. Just a single `.db` file.
 
 > **This is the upstream engine.** If you want to build your own agent, fork [**cede**](https://github.com/MikeSquared-Agency/cede) instead. If you want an omnichannel deployment with HTTP API, see [**omni-cede**](https://github.com/MikeSquared-Agency/omni-cede).
 
 ## Ecosystem
 
 ```
-cortex-embedded          <-- you are here (the engine)
-  |-- cede               <-- forkable starter kit for building self-aware agents
+cortex-embedded          <-- you are here (embedded memory graph engine)
+  |-- cede               <-- forkable starter kit for building agents
        |-- omni-cede     <-- omnichannel variant (HTTP API, identity, sessions)
 ```
 
 ## Features
 
-- **Graph memory** — 18 node kinds, 6 edge kinds, full provenance tracking
+- **Embedded memory graph** — 18 node kinds, 6 edge kinds, full provenance tracking. Everything is a node; everything is queryable.
 - **Graph-native chat sessions** — each turn stores a `UserInput` node, builds a fresh HNSW-based briefing (no growing message history)
 - **Hybrid recall** — HNSW ANN search + BFS graph traversal + trust scoring + recency decay + session recency window
 - **Embeddings** — BAAI/bge-small-en-v1.5 via fastembed (384-dim, runs locally)
@@ -144,6 +144,8 @@ The agent knows not just *what* it knows, but *how it came to know it*, *when*, 
 - **Decay** — every 60s, nodes lose importance proportional to elapsed time (floor: 0.01)
 
 ## Using as a Library
+
+Embed the memory graph directly in your application — no server, no network calls:
 
 ```rust
 use cortex_embedded::{CortexEmbedded, types::*};
